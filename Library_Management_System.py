@@ -64,7 +64,10 @@ def main_menu():
             show_books()
 
         elif choice == "3":
-            show_book()    
+            show_book()  
+
+        elif choice == "4":
+            delete_book()      
 
 # ==========================
 # Show Book
@@ -91,5 +94,23 @@ def show_book():
 
     if not found:
         print("Book not found!")
+
+# ==========================
+# Delete Book
+# ==========================
     
+def delete_book():
+    title = input("Enter book title: ").strip()
+    found = False
+
+    for book in books:
+        if book["title"] == title:
+            books.remove(book)
+            print("Book deleted successfully!")
+            found = True
+            break
+
+    if not found:
+        print ("Book not found!") 
+               
 main_menu()               
