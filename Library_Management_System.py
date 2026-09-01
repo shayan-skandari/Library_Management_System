@@ -1,6 +1,10 @@
 books = []
 
 
+# ==========================
+# Add Book
+# ==========================
+
 def add_book():
     title = input("Enter book title: ").strip()
     author = input("Enter author: ").strip()
@@ -18,6 +22,10 @@ def add_book():
     print("Book added successfully!")
 
 
+# ==========================
+# Show Books
+# ==========================
+
 def show_books():
     if not books:
         print("No books found!")
@@ -32,6 +40,9 @@ def show_books():
         else:
             print("Borrowed")
 
+# ==========================
+# Main Menu
+# ==========================
 
 def main_menu():
     while True:
@@ -52,5 +63,33 @@ def main_menu():
         elif choice == "2":
             show_books()
 
+        elif choice == "3":
+            show_book()    
 
-main_menu()
+# ==========================
+# Show Book
+# ==========================
+
+def show_book():
+    title = input("Enter book title: ").strip()
+    found = False
+
+    for book in books:
+        if book["title"] == title:
+            found = True
+
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")  
+
+    if not found:
+        print("Book not found!")
+    
+main_menu()               
