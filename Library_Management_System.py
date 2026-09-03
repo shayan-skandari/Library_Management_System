@@ -54,6 +54,8 @@ def main_menu():
         print("5. Borrow Book")
         print("6. Return Book")
         print("7. Exit")
+        print("8. Save Books")
+        print("9. Load Books")
 
         choice = input("Enter your choice: ")
 
@@ -78,6 +80,12 @@ def main_menu():
         elif choice == "7":
             print("Goodbye!")     
             break  
+
+        elif choice == "8":
+            save_books()
+
+        elif choice == "9":
+            load_books()    
 
 # ==========================
 # Show Book
@@ -170,5 +178,37 @@ def return_book():
 
     if not found:
         print("Book not found!")              
+
+# ==========================
+# Save Books
+# ==========================
+
+def save_books():
+    with open(r"C:\Users\Shayan\Desktop\python_project\Library_Management_System\books.txt", "w") as file:
+        for book in books:
+            file.write(f"{book['title']}|{book['author']}|{book['year']}|{book['available']}\n")
+
+    print("Books saved successfully!")
+
+
+# ==========================
+# Load Books
+# ==========================
+
+def load_books():
+    with open(r"C:\Users\Shayan\Desktop\python_project\Library_Management_System\books.txt", "r") as file:
+        for line in file:
+            title, author, year, available = line.strip().split("|")
+
+            book = {
+                "title": title,
+                "author": author,
+                "year": int(year),
+                "available": available == "True"
+            }
+
+            books.append(book)
+
+    print("Books loaded successfully!")
 
 main_menu()               
