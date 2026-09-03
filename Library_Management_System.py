@@ -70,7 +70,14 @@ def main_menu():
             delete_book()  
 
         elif choice == "5":
-            borrow_book()        
+            borrow_book()  
+
+        elif choice == "6":
+            return_book()       
+
+        elif choice == "7":
+            print("Goodbye!")     
+            break  
 
 # ==========================
 # Show Book
@@ -139,7 +146,29 @@ def borrow_book():
 
 
     if not found:
-        print("Book not found!")             
+        print("Book not found!")    
 
+# ==========================
+# Return Book
+# ==========================          
+
+def return_book():
+    title = input("Enter book title:").strip()
+    found = False
+
+    for book in books:
+        if book["title"] == title:
+            found = True 
+
+            if not book["available"]:
+                book["available"] = True
+                print("Book returned successfully!")
+
+            else:
+                print("Book is already available!")  
+
+
+    if not found:
+        print("Book not found!")              
 
 main_menu()               
