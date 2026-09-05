@@ -40,6 +40,7 @@ def add_book():
 def show_books():
     if not books:
         print("No books found!")
+        return
 
     for book in books:
         print(book["title"])
