@@ -12,7 +12,13 @@ def add_book():
     while True:
         try:
             year = int(input("Enter publication year: "))
-            break
+
+            if year > 0:
+                break
+            else:
+                print("invalid year!")    
+
+
         except ValueError:
             print("Invalid year!")
 
