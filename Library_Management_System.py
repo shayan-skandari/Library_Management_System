@@ -188,6 +188,31 @@ def load_books():
 
 
 # ==========================
+# Search_book
+# ==========================
+
+def search_book():
+    title = input("Enter book title: ").strip()
+    found = False
+
+
+    for book in books:
+        if book["title"] == title:
+            found = True
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
+
+
+    if not found:
+        print("Book not found!")            
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -203,6 +228,7 @@ def main_menu():
         print("7. Exit")
         print("8. Save Books")
         print("9. Load Books")
+        print("10. Search Book")
 
         choice = input("Enter your choice: ")
 
@@ -233,6 +259,9 @@ def main_menu():
 
         elif choice == "9":
             load_books()
+
+        elif choice == "10":
+            search_book()    
 
 
 main_menu()
