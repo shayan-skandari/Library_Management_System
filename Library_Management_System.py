@@ -197,7 +197,9 @@ def search_book():
 
 
     for book in books:
-        if book["title"] == title:
+        if book["title"].lower() == title.lower():
+            print("MATCH!")
+            
             found = True
             print(book["title"])
             print(book["author"])
