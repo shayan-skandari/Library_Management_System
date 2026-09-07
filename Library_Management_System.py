@@ -12,6 +12,11 @@ def add_book():
         print("Title cannot be empty!")
         title = input("Enter book title: ").strip()
 
+    for book in books:
+        if book["title"].lower() == title.lower():
+            print("book already exists!")
+            return
+            
     author = input("Enter author: ").strip()
 
     while not author:
