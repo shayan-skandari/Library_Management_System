@@ -369,6 +369,30 @@ def search_by_year():
           
 
 # ==========================
+# Search by Keyword
+# ==========================
+
+def search_by_keyword():
+    keyword = input("Enter keyword: ").strip()
+    found = False
+
+    for book in books:
+        if keyword.lower() in book["title"].lower():
+            found = True
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
+
+    if not found:
+        print("Book not found!")            
+
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -391,6 +415,7 @@ def main_menu():
         print("14. Count Available Books")
         print("15. Count Borrowed Books")
         print("16. Search By Year")
+        print("17. Search By Keyword")
 
         choice = input("Enter your choice: ")
 
@@ -441,7 +466,10 @@ def main_menu():
             count_borrowed_books()   
 
         elif choice == "16":
-            search_by_year()        
+            search_by_year() 
+
+        elif choice == "17":
+            search_by_keyword()         
 
 
 main_menu()
