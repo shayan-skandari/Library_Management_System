@@ -305,6 +305,21 @@ def edit_book():
 def count_books():
     print(f"Total books: {len(books)}")
 
+
+# ==========================
+# Count Available Books
+# ==========================
+
+def count_available_books():
+    count = 0
+
+    for book in books:
+        if book["available"]:
+            count += 1
+
+    print(f"total available bboks: {count}")              
+                   
+
 # ==========================
 # Main Menu
 # ==========================
@@ -325,6 +340,7 @@ def main_menu():
         print("11. Search by Author")
         print("12. Edit Book")
         print("13. Count Books")
+        print("14. Count Available Books")
 
         choice = input("Enter your choice: ")
 
@@ -366,7 +382,10 @@ def main_menu():
             edit_book()
 
         elif choice == "13":
-            count_books()    
+            count_books()  
+
+        elif choice == "14":
+            count_available_books()      
 
 
 main_menu()
