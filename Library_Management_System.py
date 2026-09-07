@@ -16,8 +16,7 @@ def add_book():
             if year > 0:
                 break
             else:
-                print("invalid year!")    
-
+                print("Invalid year!")
 
         except ValueError:
             print("Invalid year!")
@@ -32,6 +31,7 @@ def add_book():
     books.append(book)
 
     print("Book added successfully!")
+
 
 # ==========================
 # Show Books
@@ -188,19 +188,17 @@ def load_books():
 
 
 # ==========================
-# Search_book
+# Search Book
 # ==========================
 
 def search_book():
     title = input("Enter book title: ").strip()
     found = False
 
-
     for book in books:
         if book["title"].lower() == title.lower():
-            print("MATCH!")
-            
             found = True
+
             print(book["title"])
             print(book["author"])
             print(book["year"])
@@ -210,9 +208,34 @@ def search_book():
             else:
                 print("Borrowed")
 
+    if not found:
+        print("Book not found!")
+
+
+# ==========================
+# Search by Author
+# ==========================
+
+def search_by_author():
+    author = input("Enter author name: ").strip()
+    found = False
+
+    for book in books:
+        if book["author"].lower() == author.lower():
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
 
     if not found:
-        print("Book not found!")            
+        print("Author not found!")            
+
 
 # ==========================
 # Main Menu
@@ -231,6 +254,7 @@ def main_menu():
         print("8. Save Books")
         print("9. Load Books")
         print("10. Search Book")
+        print("11. Search by Author")
 
         choice = input("Enter your choice: ")
 
@@ -263,7 +287,10 @@ def main_menu():
             load_books()
 
         elif choice == "10":
-            search_book()    
+            search_book()
+
+        elif choice == "11":
+            search_by_author()
 
 
 main_menu()
