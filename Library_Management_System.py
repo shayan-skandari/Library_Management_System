@@ -402,8 +402,19 @@ def search_by_keyword():
 # ==========================
 
 def clear_books():
-    books.clear()
-    print("All books Cleared successfully!")
+    confirmation = input(
+        "Are you sure you want to clear all books? (y/n): "
+    ).strip().lower()
+
+    if confirmation == "y":
+        books.clear()
+        print("All books cleared successfully!")
+
+    elif confirmation == "n":
+        print("Clear operation cancelled!")
+
+    else:
+        print("invalid choice!")    
 
 # ==========================
 # Main Menu
