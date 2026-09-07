@@ -398,6 +398,14 @@ def search_by_keyword():
 
 
 # ==========================
+# Clear Books
+# ==========================
+
+def clear_books():
+    books.clear()
+    print("All books Cleared successfully!")
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -421,6 +429,7 @@ def main_menu():
         print("15. Count Borrowed Books")
         print("16. Search By Year")
         print("17. Search By Keyword")
+        print("18. Clear Books")
 
         choice = input("Enter your choice: ")
 
@@ -474,7 +483,10 @@ def main_menu():
             search_by_year() 
 
         elif choice == "17":
-            search_by_keyword()         
+            search_by_keyword() 
+
+        elif choice == "18":
+            clear_books()            
 
 
 main_menu()
