@@ -299,6 +299,13 @@ def edit_book():
 
 
 # ==========================
+# Count Books
+# ==========================
+
+def count_books():
+    print(f"Total books: {len(books)}")
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -317,6 +324,7 @@ def main_menu():
         print("10. Search Book")
         print("11. Search by Author")
         print("12. Edit Book")
+        print("13. Count Books")
 
         choice = input("Enter your choice: ")
 
@@ -356,6 +364,9 @@ def main_menu():
 
         elif choice == "12":
             edit_book()
+
+        elif choice == "13":
+            count_books()    
 
 
 main_menu()
