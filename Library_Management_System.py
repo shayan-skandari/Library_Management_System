@@ -12,9 +12,8 @@ def add_book():
         print("Title cannot be empty!")
         title = input("Enter book title: ").strip()
 
-
     author = input("Enter author: ").strip()
-    
+
     while not author:
         print("Author cannot be empty!")
         author = input("Enter author: ").strip()
@@ -244,7 +243,59 @@ def search_by_author():
                 print("Borrowed")
 
     if not found:
-        print("Author not found!")            
+        print("Author not found!")
+
+
+# ==========================
+# Edit Book
+# ==========================
+
+def edit_book():
+    title = input("Enter book title to edit: ").strip()
+    found = False
+
+    for book in books:
+        if book["title"].lower() == title.lower():
+            found = True
+
+            while True:
+                new_title = input("Enter new title: ").strip()
+
+                if new_title:
+                    break
+
+                print("Title cannot be empty!")
+
+            book["title"] = new_title
+
+            while True:
+                new_author = input("Enter new author: ").strip()
+
+                if new_author:
+                    break
+
+                print("Author cannot be empty!")
+
+            book["author"] = new_author
+
+            while True:
+                try:
+                    new_year = int(input("Enter new publication year: "))
+
+                    if new_year > 0:
+                        break
+                    else:
+                        print("Invalid year!")
+
+                except ValueError:
+                    print("Invalid year!")
+
+            book["year"] = new_year
+
+            print("Book updated successfully!")
+
+    if not found:
+        print("Book not found!")
 
 
 # ==========================
@@ -265,6 +316,7 @@ def main_menu():
         print("9. Load Books")
         print("10. Search Book")
         print("11. Search by Author")
+        print("12. Edit Book")
 
         choice = input("Enter your choice: ")
 
@@ -301,6 +353,9 @@ def main_menu():
 
         elif choice == "11":
             search_by_author()
+
+        elif choice == "12":
+            edit_book()
 
 
 main_menu()
