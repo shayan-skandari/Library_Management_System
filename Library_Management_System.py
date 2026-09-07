@@ -319,6 +319,18 @@ def count_available_books():
 
     print(f"total available bboks: {count}")              
                    
+# ==========================
+# Count Borrowed Books
+# ==========================
+
+def count_borrowed_books():
+    count = 0
+
+    for book in books:
+        if not book["available"]:
+            count += 1
+
+    print(f"Total borrowed books: {count}")         
 
 # ==========================
 # Main Menu
@@ -341,6 +353,7 @@ def main_menu():
         print("12. Edit Book")
         print("13. Count Books")
         print("14. Count Available Books")
+        print("15. Count Borrowed Books")
 
         choice = input("Enter your choice: ")
 
@@ -385,7 +398,10 @@ def main_menu():
             count_books()  
 
         elif choice == "14":
-            count_available_books()      
+            count_available_books()   
+
+        elif choice == "15":
+            count_borrowed_books()       
 
 
 main_menu()
