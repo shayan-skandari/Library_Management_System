@@ -7,7 +7,17 @@ books = []
 
 def add_book():
     title = input("Enter book title: ").strip()
+
+    while not title:
+        print("Title cannot be empty!")
+        title = input("Enter book title: ").strip()
+
+
     author = input("Enter author: ").strip()
+    
+    while not author:
+        print("Author cannot be empty!")
+        author = input("Enter author: ").strip()
 
     while True:
         try:
