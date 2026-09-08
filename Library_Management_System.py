@@ -441,6 +441,26 @@ def show_available_books():
     if not found:
         print("No available books found!")        
 
+
+# ==========================
+# Show Borrowed Books
+# ==========================
+
+def show_borrowed_books():
+    found = False
+
+    for book in books:
+        if not book["available"]:
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+            print("Borrowed")
+
+    if not found:
+        print("No borrowed books found!")
+
 # ==========================
 # Main Menu
 # ==========================
@@ -467,6 +487,7 @@ def main_menu():
         print("17. Search by Keyword")
         print("18. Clear Books")
         print("19. Show Available Books")
+        print("20. Show Borrowed Books")
 
         choice = input("Enter your choice: ")
 
@@ -526,7 +547,10 @@ def main_menu():
             clear_books()
 
         elif choice == "19":
-            show_available_books()    
+            show_available_books()  
+
+        elif choice == "20":
+            show_borrowed_books()      
 
 
 main_menu()
