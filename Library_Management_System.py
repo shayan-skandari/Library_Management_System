@@ -491,6 +491,25 @@ def search_by_availability():
         print("No books found!")
 
 # ==========================
+# Sort Books
+# ========================== 
+
+def sort_books():
+    choice = input("Sort by (title/year): ").strip().lower()
+
+    if choice == "title":
+        books.sort(key=lambda book: book["title"].lower())
+
+    elif choice == "year":
+        books.sort(key=lambda book: book["year"])
+
+    else:
+        print("Invalid choice!")
+        return
+
+    print("Books sorted successfully!")
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -518,6 +537,7 @@ def main_menu():
         print("19. Show Available Books")
         print("20. Show Borrowed Books")
         print("21. Search By Availability")
+        print("22. Sort Books")
 
         choice = input("Enter your choice: ")
 
@@ -583,7 +603,10 @@ def main_menu():
             show_borrowed_books()      
 
         elif choice == "21":
-            search_by_availability()    
+            search_by_availability()
+
+        elif choice == "22":
+            sort_books()        
 
 
 main_menu()
