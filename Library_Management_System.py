@@ -551,6 +551,47 @@ def filter_books_by_year():
 
 
 # ==========================
+# Filter Books
+# ==========================
+
+def filter_books():
+    year = int(input("Enter minimum publication year: "))
+
+    availability = input(
+        "Enter availability (available/borrowed): "
+    ).strip().lower()
+
+    found = False
+
+    for book in books:
+        year_match = book["year"] >= year
+
+        if availability == "available":
+            availability_match = book["available"]
+
+        elif availability == "borrowed":
+            availability_match = not book["available"]
+
+        else:
+            print("Invalid availability!")
+            return
+
+        if year_match and availability_match:
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
+
+    if not found:
+        print("No books found!")
+
+# ==========================
 # Main Menu
 # ==========================
 
@@ -580,6 +621,7 @@ def main_menu():
         print("21. Search by Availability")
         print("22. Sort Books")
         print("23. Filter Books by Year")
+        print("24. Filter Books")
 
         choice = input("Enter your choice: ")
 
@@ -652,6 +694,11 @@ def main_menu():
 
         elif choice == "23":
             filter_books_by_year()
+
+        elif choice == "24":
+            filter_books()    
+
+
 
 
 main_menu()
