@@ -103,7 +103,9 @@ def delete_book():
     for book in books:
         if book["title"] == title:
             books.remove(book)
+
             print("Book deleted successfully!")
+
             found = True
             break
 
@@ -285,7 +287,9 @@ def edit_book():
 
             while True:
                 try:
-                    new_year = int(input("Enter new publication year: "))
+                    new_year = int(
+                        input("Enter new publication year: ")
+                    )
 
                     if new_year > 0:
                         break
@@ -420,6 +424,7 @@ def clear_books():
     else:
         print("Invalid choice!")
 
+
 # ==========================
 # Show Available Books
 # ==========================
@@ -431,15 +436,13 @@ def show_available_books():
         if book["available"]:
             found = True
 
-
             print(book["title"])
             print(book["author"])
             print(book["year"])
             print("Available")
 
-
     if not found:
-        print("No available books found!")        
+        print("No available books found!")
 
 
 # ==========================
@@ -461,16 +464,20 @@ def show_borrowed_books():
     if not found:
         print("No borrowed books found!")
 
+
 # ==========================
-# Search By Availability
+# Search by Availability
 # ==========================
 
 def search_by_availability():
-    choice = input("Enter availability (available/borrowed): ").strip().lower()
+    choice = input(
+        "Enter availability (available/borrowed): "
+    ).strip().lower()
 
     found = False
 
     for book in books:
+
         if choice == "available" and book["available"]:
             found = True
 
@@ -490,24 +497,58 @@ def search_by_availability():
     if not found:
         print("No books found!")
 
+
 # ==========================
 # Sort Books
-# ========================== 
+# ==========================
 
 def sort_books():
     choice = input("Sort by (title/year): ").strip().lower()
 
     if choice == "title":
-        books.sort(key=lambda book: book["title"].lower())
+        books.sort(
+            key=lambda book: book["title"].lower()
+        )
 
     elif choice == "year":
-        books.sort(key=lambda book: book["year"])
+        books.sort(
+            key=lambda book: book["year"]
+        )
 
     else:
         print("Invalid choice!")
         return
 
     print("Books sorted successfully!")
+
+
+# ==========================
+# Filter Books by Year
+# ==========================
+
+def filter_books_by_year():
+    year = int(
+        input("Enter minimum publication year: ")
+    )
+
+    found = False
+
+    for book in books:
+        if book["year"] >= year:
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
+
+    if not found:
+        print("No books found!")
+
 
 # ==========================
 # Main Menu
@@ -536,8 +577,9 @@ def main_menu():
         print("18. Clear Books")
         print("19. Show Available Books")
         print("20. Show Borrowed Books")
-        print("21. Search By Availability")
+        print("21. Search by Availability")
         print("22. Sort Books")
+        print("23. Filter Books by Year")
 
         choice = input("Enter your choice: ")
 
@@ -597,17 +639,19 @@ def main_menu():
             clear_books()
 
         elif choice == "19":
-            show_available_books()  
+            show_available_books()
 
         elif choice == "20":
-            show_borrowed_books()      
+            show_borrowed_books()
 
         elif choice == "21":
             search_by_availability()
 
         elif choice == "22":
-            sort_books()        
+            sort_books()
+
+        elif choice == "23":
+            filter_books_by_year()
 
 
 main_menu()
-
