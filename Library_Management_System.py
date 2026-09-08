@@ -14,9 +14,9 @@ def add_book():
 
     for book in books:
         if book["title"].lower() == title.lower():
-            print("book already exists!")
+            print("Book already exists!")
             return
-            
+
     author = input("Enter author: ").strip()
 
     while not author:
@@ -322,8 +322,9 @@ def count_available_books():
         if book["available"]:
             count += 1
 
-    print(f"total available bboks: {count}")              
-                   
+    print(f"Total available books: {count}")
+
+
 # ==========================
 # Count Borrowed Books
 # ==========================
@@ -335,7 +336,8 @@ def count_borrowed_books():
         if not book["available"]:
             count += 1
 
-    print(f"Total borrowed books: {count}")   
+    print(f"Total borrowed books: {count}")
+
 
 # ==========================
 # Search by Year
@@ -349,41 +351,17 @@ def search_by_year():
             if year > 0:
                 break
             else:
-                print("invalid year!")
+                print("Invalid year!")
 
         except ValueError:
-            print("invalid year!")    
-
+            print("Invalid year!")
 
     found = False
 
     for book in books:
         if book["year"] == year:
-            found = True          
-            print(book["title"])
-            print(book["author"])
-            print(book["year"])
-
-            if book["available"]:
-                print("Available")
-            else:
-                print("Borrowed")  
-
-    if not found:
-        print("Book not found!")              
-          
-
-# ==========================
-# Search by Keyword
-# ==========================
-
-def search_by_keyword():
-    keyword = input("Enter keyword: ").strip()
-    found = False
-
-    for book in books:
-        if keyword.lower() in book["title"].lower():
             found = True
+
             print(book["title"])
             print(book["author"])
             print(book["year"])
@@ -394,7 +372,33 @@ def search_by_keyword():
                 print("Borrowed")
 
     if not found:
-        print("Book not found!")            
+        print("Book not found!")
+
+
+# ==========================
+# Search by Keyword
+# ==========================
+
+def search_by_keyword():
+    keyword = input("Enter keyword: ").strip()
+
+    found = False
+
+    for book in books:
+        if keyword.lower() in book["title"].lower():
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+                print("Available")
+            else:
+                print("Borrowed")
+
+    if not found:
+        print("Book not found!")
 
 
 # ==========================
@@ -414,7 +418,28 @@ def clear_books():
         print("Clear operation cancelled!")
 
     else:
-        print("invalid choice!")    
+        print("Invalid choice!")
+
+# ==========================
+# Show Available Books
+# ==========================
+
+def show_available_books():
+    found = False
+
+    for book in books:
+        if book["available"]:
+            found = True
+
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+            print("Available")
+
+
+    if not found:
+        print("No available books found!")        
 
 # ==========================
 # Main Menu
@@ -438,9 +463,10 @@ def main_menu():
         print("13. Count Books")
         print("14. Count Available Books")
         print("15. Count Borrowed Books")
-        print("16. Search By Year")
-        print("17. Search By Keyword")
+        print("16. Search by Year")
+        print("17. Search by Keyword")
         print("18. Clear Books")
+        print("19. Show Available Books")
 
         choice = input("Enter your choice: ")
 
@@ -482,22 +508,26 @@ def main_menu():
             edit_book()
 
         elif choice == "13":
-            count_books()  
+            count_books()
 
         elif choice == "14":
-            count_available_books()   
+            count_available_books()
 
         elif choice == "15":
-            count_borrowed_books()   
+            count_borrowed_books()
 
         elif choice == "16":
-            search_by_year() 
+            search_by_year()
 
         elif choice == "17":
-            search_by_keyword() 
+            search_by_keyword()
 
         elif choice == "18":
-            clear_books()            
+            clear_books()
+
+        elif choice == "19":
+            show_available_books()    
 
 
 main_menu()
+
