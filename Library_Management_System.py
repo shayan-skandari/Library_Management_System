@@ -1,6 +1,9 @@
+import datetime
 
 books = []
 
+
+borrow_history = []
 
 # ==========================
 # Add Book
@@ -157,8 +160,16 @@ def borrow_book():
                 borrower = input("Enter borrower name: ")
 
                 book["borrower"] = borrower
-
                 book["available"] = False
+
+                history = {
+                    "title": book["title"],
+                    "borrower": borrower,
+                    "action": "Borrowed",
+                    "date": datetime.datetime.now()
+                }
+
+                borrow_history.append(history)
 
                 print("Book borrowed successfully!")
 
@@ -167,8 +178,8 @@ def borrow_book():
                 print("Book is already borrowed!")
 
     if not found:
-        print("Book not found!")
 
+        print("Book not found!")
 
 
 # ==========================
@@ -189,6 +200,17 @@ def return_book():
 
             if not book["available"]:
 
+                borrower = book["borrower"]
+
+                history = {
+                    "title": book["title"],
+                    "borrower": borrower,
+                    "action": "Returned",
+                    "date": datetime.datetime.now()
+                }
+
+                borrow_history.append(history)
+
                 book["available"] = True
                 book["borrower"] = ""
 
@@ -199,8 +221,8 @@ def return_book():
                 print("Book is already available!")
 
     if not found:
-        print("Book not found!")
 
+        print("Book not found!")
 
 
 # ==========================
@@ -746,6 +768,15 @@ def change_borrower():
                 
 
 # ==========================
+# Show Borrow History
+# ==========================
+
+def show_borrow_history():
+
+    for history in borrow_history:
+        print(history)
+
+# ==========================
 # Menu
 # ==========================
 
@@ -778,6 +809,7 @@ while True:
     print("23. Filter Books by Year")
     print("24. Filter Books")
     print("25. Change Borrower")
+    print("26. Show Borrow History")
 
     choice = input("Enter your choice: ")
 
@@ -903,7 +935,10 @@ while True:
         filter_books()
 
     elif choice == "25":
-        change_borrower()    
+        change_borrower()  
+
+    elif choice == "26":
+        show_borrow_history()      
 
 
     else:
