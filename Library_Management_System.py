@@ -788,8 +788,14 @@ def show_borrow_history():
 
 def clear_borrow_history():
 
-   borrow_history.clear()
-   print("Borrow history cleared successfully!")
+    confirmation = input("Are you sure you want to clear borrow history? (yes/no): ")
+
+
+    if confirmation == "yes":
+        borrow_history.clear()
+        print("Borrow history cleared successfully!")
+    else:
+        print("Borrow history was not cleared")    
 
 # ==========================
 # Menu
