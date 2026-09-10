@@ -1,3 +1,4 @@
+
 books = []
 
 
@@ -6,40 +7,41 @@ books = []
 # ==========================
 
 def add_book():
+
     title = input("Enter book title: ").strip()
 
-    while not title:
+    if not title:
         print("Title cannot be empty!")
-        title = input("Enter book title: ").strip()
+        return
+
+    author = input("Enter author name: ").strip()
+
+    if not author:
+        print("Author cannot be empty!")
+        return
+
+    try:
+        year = int(input("Enter publication year: "))
+    except ValueError:
+        print("Year must be a number!")
+        return
+
+    if year <= 0:
+        print("Year must be greater than 0!")
+        return
 
     for book in books:
+
         if book["title"].lower() == title.lower():
             print("Book already exists!")
             return
-
-    author = input("Enter author: ").strip()
-
-    while not author:
-        print("Author cannot be empty!")
-        author = input("Enter author: ").strip()
-
-    while True:
-        try:
-            year = int(input("Enter publication year: "))
-
-            if year > 0:
-                break
-            else:
-                print("Invalid year!")
-
-        except ValueError:
-            print("Invalid year!")
 
     book = {
         "title": title,
         "author": author,
         "year": year,
-        "available": True
+        "available": True,
+        "borrower": ""
     }
 
     books.append(book)
@@ -47,24 +49,32 @@ def add_book():
     print("Book added successfully!")
 
 
+
 # ==========================
 # Show Books
 # ==========================
 
 def show_books():
+
     if not books:
         print("No books found!")
         return
 
     for book in books:
+
         print(book["title"])
         print(book["author"])
         print(book["year"])
 
         if book["available"]:
             print("Available")
+
         else:
             print("Borrowed")
+            print("Borrower:", book["borrower"])
+
+        print("-" * 30)
+
 
 
 # ==========================
@@ -72,11 +82,15 @@ def show_books():
 # ==========================
 
 def show_book():
+
     title = input("Enter book title: ").strip()
+
     found = False
 
     for book in books:
+
         if book["title"] == title:
+
             found = True
 
             print(book["title"])
@@ -85,11 +99,14 @@ def show_book():
 
             if book["available"]:
                 print("Available")
+
             else:
                 print("Borrowed")
+                print("Borrower:", book["borrower"])
 
     if not found:
         print("Book not found!")
+
 
 
 # ==========================
@@ -97,20 +114,26 @@ def show_book():
 # ==========================
 
 def delete_book():
+
     title = input("Enter book title: ").strip()
+
     found = False
 
     for book in books:
+
         if book["title"] == title:
+
             books.remove(book)
+
+            found = True
 
             print("Book deleted successfully!")
 
-            found = True
             break
 
     if not found:
         print("Book not found!")
+
 
 
 # ==========================
@@ -118,21 +141,34 @@ def delete_book():
 # ==========================
 
 def borrow_book():
+
     title = input("Enter book title: ").strip()
+
     found = False
 
     for book in books:
+
         if book["title"] == title:
+
             found = True
 
             if book["available"]:
+
+                borrower = input("Enter borrower name: ")
+
+                book["borrower"] = borrower
+
                 book["available"] = False
+
                 print("Book borrowed successfully!")
+
             else:
+
                 print("Book is already borrowed!")
 
     if not found:
         print("Book not found!")
+
 
 
 # ==========================
@@ -140,21 +176,31 @@ def borrow_book():
 # ==========================
 
 def return_book():
+
     title = input("Enter book title: ").strip()
+
     found = False
 
     for book in books:
+
         if book["title"] == title:
+
             found = True
 
             if not book["available"]:
+
                 book["available"] = True
+                book["borrower"] = ""
+
                 print("Book returned successfully!")
+
             else:
+
                 print("Book is already available!")
 
     if not found:
         print("Book not found!")
+
 
 
 # ==========================
@@ -162,18 +208,22 @@ def return_book():
 # ==========================
 
 def save_books():
+
     with open(
         r"C:\Users\Shayan\Desktop\python_project\Library_Management_System\books.txt",
         "w"
     ) as file:
 
         for book in books:
+
             file.write(
                 f"{book['title']}|{book['author']}|"
                 f"{book['year']}|{book['available']}\n"
+                f"{book['borrower']}\n"
             )
 
     print("Books saved successfully!")
+
 
 
 # ==========================
@@ -181,6 +231,7 @@ def save_books():
 # ==========================
 
 def load_books():
+
     books.clear()
 
     with open(
@@ -189,13 +240,15 @@ def load_books():
     ) as file:
 
         for line in file:
-            title, author, year, available = line.strip().split("|")
+
+            title, author, year, available, borrower = line.strip().split("|")
 
             book = {
                 "title": title,
                 "author": author,
                 "year": int(year),
-                "available": available == "True"
+                "available": available == "True",
+                "borrower": borrower
             }
 
             books.append(book)
@@ -203,16 +256,21 @@ def load_books():
     print("Books loaded successfully!")
 
 
+
 # ==========================
 # Search Book
 # ==========================
 
 def search_book():
-    title = input("Enter book title: ").strip()
+
+    keyword = input("Enter book title: ").strip().lower()
+
     found = False
 
     for book in books:
-        if book["title"].lower() == title.lower():
+
+        if keyword in book["title"].lower():
+
             found = True
 
             print(book["title"])
@@ -221,11 +279,13 @@ def search_book():
 
             if book["available"]:
                 print("Available")
+
             else:
                 print("Borrowed")
 
     if not found:
-        print("Book not found!")
+        print("No books found!")
+
 
 
 # ==========================
@@ -233,24 +293,24 @@ def search_book():
 # ==========================
 
 def search_by_author():
-    author = input("Enter author name: ").strip()
+
+    author = input("Enter author name: ").strip().lower()
+
     found = False
 
     for book in books:
-        if book["author"].lower() == author.lower():
+
+        if author in book["author"].lower():
+
             found = True
 
             print(book["title"])
             print(book["author"])
             print(book["year"])
 
-            if book["available"]:
-                print("Available")
-            else:
-                print("Borrowed")
-
     if not found:
-        print("Author not found!")
+        print("No books found!")
+
 
 
 # ==========================
@@ -258,46 +318,37 @@ def search_by_author():
 # ==========================
 
 def edit_book():
-    title = input("Enter book title to edit: ").strip()
+
+    title = input("Enter book title: ").strip()
+
     found = False
 
     for book in books:
-        if book["title"].lower() == title.lower():
+
+        if book["title"] == title:
+
             found = True
 
-            while True:
-                new_title = input("Enter new title: ").strip()
+            new_title = input("Enter new title: ").strip()
 
-                if new_title:
-                    break
+            if new_title:
+                book["title"] = new_title
 
-                print("Title cannot be empty!")
+            new_author = input("Enter new author: ").strip()
 
-            book["title"] = new_title
+            if new_author:
+                book["author"] = new_author
 
-            while True:
-                new_author = input("Enter new author: ").strip()
+            try:
+                new_year = int(input("Enter new publication year: "))
 
-                if new_author:
-                    break
+            except ValueError:
+                print("Year must be a number!")
+                return
 
-                print("Author cannot be empty!")
-
-            book["author"] = new_author
-
-            while True:
-                try:
-                    new_year = int(
-                        input("Enter new publication year: ")
-                    )
-
-                    if new_year > 0:
-                        break
-                    else:
-                        print("Invalid year!")
-
-                except ValueError:
-                    print("Invalid year!")
+            if new_year <= 0:
+                print("Year must be greater than 0!")
+                return
 
             book["year"] = new_year
 
@@ -307,12 +358,15 @@ def edit_book():
         print("Book not found!")
 
 
+
 # ==========================
 # Count Books
 # ==========================
 
 def count_books():
-    print(f"Total books: {len(books)}")
+
+    print("Total books:", len(books))
+
 
 
 # ==========================
@@ -320,13 +374,16 @@ def count_books():
 # ==========================
 
 def count_available_books():
+
     count = 0
 
     for book in books:
+
         if book["available"]:
             count += 1
 
-    print(f"Total available books: {count}")
+    print("Available books:", count)
+
 
 
 # ==========================
@@ -334,13 +391,16 @@ def count_available_books():
 # ==========================
 
 def count_borrowed_books():
+
     count = 0
 
     for book in books:
+
         if not book["available"]:
             count += 1
 
-    print(f"Total borrowed books: {count}")
+    print("Borrowed books:", count)
+
 
 
 # ==========================
@@ -348,35 +408,29 @@ def count_borrowed_books():
 # ==========================
 
 def search_by_year():
-    while True:
-        try:
-            year = int(input("Enter publication year: "))
 
-            if year > 0:
-                break
-            else:
-                print("Invalid year!")
+    try:
+        year = int(input("Enter publication year: "))
 
-        except ValueError:
-            print("Invalid year!")
+    except ValueError:
+        print("Year must be a number!")
+        return
 
     found = False
 
     for book in books:
+
         if book["year"] == year:
+
             found = True
 
             print(book["title"])
             print(book["author"])
             print(book["year"])
 
-            if book["available"]:
-                print("Available")
-            else:
-                print("Borrowed")
-
     if not found:
-        print("Book not found!")
+        print("No books found!")
+
 
 
 # ==========================
@@ -384,25 +438,27 @@ def search_by_year():
 # ==========================
 
 def search_by_keyword():
-    keyword = input("Enter keyword: ").strip()
+
+    keyword = input("Enter keyword: ").strip().lower()
 
     found = False
 
     for book in books:
-        if keyword.lower() in book["title"].lower():
+
+        if (
+            keyword in book["title"].lower()
+            or keyword in book["author"].lower()
+        ):
+
             found = True
 
             print(book["title"])
             print(book["author"])
             print(book["year"])
 
-            if book["available"]:
-                print("Available")
-            else:
-                print("Borrowed")
-
     if not found:
-        print("Book not found!")
+        print("No books found!")
+
 
 
 # ==========================
@@ -410,19 +466,25 @@ def search_by_keyword():
 # ==========================
 
 def clear_books():
-    confirmation = input(
-        "Are you sure you want to clear all books? (y/n): "
+
+    if not books:
+        print("No books found!")
+        return
+
+    confirm = input(
+        "Are you sure you want to delete all books? (yes/no): "
     ).strip().lower()
 
-    if confirmation == "y":
-        books.clear()
-        print("All books cleared successfully!")
+    if confirm == "yes":
 
-    elif confirmation == "n":
-        print("Clear operation cancelled!")
+        books.clear()
+
+        print("All books cleared!")
 
     else:
-        print("Invalid choice!")
+
+        print("Clear cancelled.")
+
 
 
 # ==========================
@@ -430,10 +492,13 @@ def clear_books():
 # ==========================
 
 def show_available_books():
+
     found = False
 
     for book in books:
+
         if book["available"]:
+
             found = True
 
             print(book["title"])
@@ -441,8 +506,11 @@ def show_available_books():
             print(book["year"])
             print("Available")
 
+            print("-" * 30)
+
     if not found:
         print("No available books found!")
+
 
 
 # ==========================
@@ -450,19 +518,26 @@ def show_available_books():
 # ==========================
 
 def show_borrowed_books():
+
     found = False
 
     for book in books:
+
         if not book["available"]:
+
             found = True
 
             print(book["title"])
             print(book["author"])
             print(book["year"])
             print("Borrowed")
+            print("Borrower:", book["borrower"])
+
+            print("-" * 30)
 
     if not found:
         print("No borrowed books found!")
+
 
 
 # ==========================
@@ -470,92 +545,6 @@ def show_borrowed_books():
 # ==========================
 
 def search_by_availability():
-    choice = input(
-        "Enter availability (available/borrowed): "
-    ).strip().lower()
-
-    found = False
-
-    for book in books:
-
-        if choice == "available" and book["available"]:
-            found = True
-
-            print(book["title"])
-            print(book["author"])
-            print(book["year"])
-            print("Available")
-
-        elif choice == "borrowed" and not book["available"]:
-            found = True
-
-            print(book["title"])
-            print(book["author"])
-            print(book["year"])
-            print("Borrowed")
-
-    if not found:
-        print("No books found!")
-
-
-# ==========================
-# Sort Books
-# ==========================
-
-def sort_books():
-    choice = input("Sort by (title/year): ").strip().lower()
-
-    if choice == "title":
-        books.sort(
-            key=lambda book: book["title"].lower()
-        )
-
-    elif choice == "year":
-        books.sort(
-            key=lambda book: book["year"]
-        )
-
-    else:
-        print("Invalid choice!")
-        return
-
-    print("Books sorted successfully!")
-
-
-# ==========================
-# Filter Books by Year
-# ==========================
-
-def filter_books_by_year():
-    year = int(
-        input("Enter minimum publication year: ")
-    )
-
-    found = False
-
-    for book in books:
-        if book["year"] >= year:
-            found = True
-
-            print(book["title"])
-            print(book["author"])
-            print(book["year"])
-
-            if book["available"]:
-                print("Available")
-            else:
-                print("Borrowed")
-
-    if not found:
-        print("No books found!")
-
-
-# ==========================
-# Filter Books
-# ==========================
-
-def filter_books():
-    year = int(input("Enter minimum publication year: "))
 
     availability = input(
         "Enter availability (available/borrowed): "
@@ -564,19 +553,22 @@ def filter_books():
     found = False
 
     for book in books:
-        year_match = book["year"] >= year
 
         if availability == "available":
-            availability_match = book["available"]
+
+            match = book["available"]
 
         elif availability == "borrowed":
-            availability_match = not book["available"]
+
+            match = not book["available"]
 
         else:
+
             print("Invalid availability!")
             return
 
-        if year_match and availability_match:
+        if match:
+
             found = True
 
             print(book["title"])
@@ -584,121 +576,304 @@ def filter_books():
             print(book["year"])
 
             if book["available"]:
+
                 print("Available")
+
             else:
+
                 print("Borrowed")
+                print("Borrower:", book["borrower"])
+
+            print("-" * 30)
 
     if not found:
         print("No books found!")
 
+
+
 # ==========================
-# Main Menu
+# Sort Books
 # ==========================
 
-def main_menu():
-    while True:
-        print("===== Library Management System =====")
-        print("1. Add Book")
-        print("2. Show Books")
-        print("3. Show Book")
-        print("4. Delete Book")
-        print("5. Borrow Book")
-        print("6. Return Book")
-        print("7. Exit")
-        print("8. Save Books")
-        print("9. Load Books")
-        print("10. Search Book")
-        print("11. Search by Author")
-        print("12. Edit Book")
-        print("13. Count Books")
-        print("14. Count Available Books")
-        print("15. Count Borrowed Books")
-        print("16. Search by Year")
-        print("17. Search by Keyword")
-        print("18. Clear Books")
-        print("19. Show Available Books")
-        print("20. Show Borrowed Books")
-        print("21. Search by Availability")
-        print("22. Sort Books")
-        print("23. Filter Books by Year")
-        print("24. Filter Books")
+def sort_books():
 
-        choice = input("Enter your choice: ")
+    books.sort(
+        key=lambda book: book["title"].lower()
+    )
 
-        if choice == "1":
-            add_book()
-
-        elif choice == "2":
-            show_books()
-
-        elif choice == "3":
-            show_book()
-
-        elif choice == "4":
-            delete_book()
-
-        elif choice == "5":
-            borrow_book()
-
-        elif choice == "6":
-            return_book()
-
-        elif choice == "7":
-            print("Goodbye!")
-            break
-
-        elif choice == "8":
-            save_books()
-
-        elif choice == "9":
-            load_books()
-
-        elif choice == "10":
-            search_book()
-
-        elif choice == "11":
-            search_by_author()
-
-        elif choice == "12":
-            edit_book()
-
-        elif choice == "13":
-            count_books()
-
-        elif choice == "14":
-            count_available_books()
-
-        elif choice == "15":
-            count_borrowed_books()
-
-        elif choice == "16":
-            search_by_year()
-
-        elif choice == "17":
-            search_by_keyword()
-
-        elif choice == "18":
-            clear_books()
-
-        elif choice == "19":
-            show_available_books()
-
-        elif choice == "20":
-            show_borrowed_books()
-
-        elif choice == "21":
-            search_by_availability()
-
-        elif choice == "22":
-            sort_books()
-
-        elif choice == "23":
-            filter_books_by_year()
-
-        elif choice == "24":
-            filter_books()    
+    print("Books sorted successfully!")
 
 
 
+# ==========================
+# Filter Books by Year
+# ==========================
 
-main_menu()
+def filter_books_by_year():
+
+    try:
+
+        year = int(
+            input("Enter minimum publication year: ")
+        )
+
+    except ValueError:
+
+        print("Year must be a number!")
+        return
+
+    found = False
+
+    for book in books:
+
+        if book["year"] >= year:
+
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+
+                print("Available")
+
+            else:
+
+                print("Borrowed")
+                print("Borrower:", book["borrower"])
+
+            print("-" * 30)
+
+    if not found:
+
+        print("No books found!")
+
+
+
+# ==========================
+# Filter Books
+# ==========================
+
+def filter_books():
+
+    try:
+
+        year = int(
+            input("Enter minimum publication year: ")
+        )
+
+    except ValueError:
+
+        print("Year must be a number!")
+        return
+
+    availability = input(
+        "Enter availability (available/borrowed): "
+    ).strip().lower()
+
+    found = False
+
+    for book in books:
+
+        year_match = book["year"] >= year
+
+        if availability == "available":
+
+            availability_match = book["available"]
+
+        elif availability == "borrowed":
+
+            availability_match = not book["available"]
+
+        else:
+
+            print("Invalid availability!")
+            return
+
+        if year_match and availability_match:
+
+            found = True
+
+            print(book["title"])
+            print(book["author"])
+            print(book["year"])
+
+            if book["available"]:
+
+                print("Available")
+
+            else:
+
+                print("Borrowed")
+                print("Borrower:", book["borrower"])
+
+            print("-" * 30)
+
+    if not found:
+
+        print("No books found!")
+
+
+
+# ==========================
+# Menu
+# ==========================
+
+while True:
+
+    print("\n===== Library Management System =====")
+
+    print("1. Add Book")
+    print("2. Show Books")
+    print("3. Show Book")
+    print("4. Delete Book")
+    print("5. Borrow Book")
+    print("6. Return Book")
+    print("7. Exit")
+    print("8. Save Books")
+    print("9. Load Books")
+    print("10. Search Book")
+    print("11. Search by Author")
+    print("12. Edit Book")
+    print("13. Count Books")
+    print("14. Count Available Books")
+    print("15. Count Borrowed Books")
+    print("16. Search by Year")
+    print("17. Search by Keyword")
+    print("18. Clear Books")
+    print("19. Show Available Books")
+    print("20. Show Borrowed Books")
+    print("21. Search by Availability")
+    print("22. Sort Books")
+    print("23. Filter Books by Year")
+    print("24. Filter Books")
+
+    choice = input("Enter your choice: ")
+
+
+    if choice == "1":
+
+        add_book()
+
+
+    elif choice == "2":
+
+        show_books()
+
+
+    elif choice == "3":
+
+        show_book()
+
+
+    elif choice == "4":
+
+        delete_book()
+
+
+    elif choice == "5":
+
+        borrow_book()
+
+
+    elif choice == "6":
+
+        return_book()
+
+
+    elif choice == "7":
+
+        print("GoodBye!")
+        break
+
+
+    elif choice == "8":
+
+        save_books()
+
+
+    elif choice == "9":
+
+        load_books()
+
+
+    elif choice == "10":
+
+        search_book()
+
+
+    elif choice == "11":
+
+        search_by_author()
+
+
+    elif choice == "12":
+
+        edit_book()
+
+
+    elif choice == "13":
+
+        count_books()
+
+
+    elif choice == "14":
+
+        count_available_books()
+
+
+    elif choice == "15":
+
+        count_borrowed_books()
+
+
+    elif choice == "16":
+
+        search_by_year()
+
+
+    elif choice == "17":
+
+        search_by_keyword()
+
+
+    elif choice == "18":
+
+        clear_books()
+
+
+    elif choice == "19":
+
+        show_available_books()
+
+
+    elif choice == "20":
+
+        show_borrowed_books()
+
+
+    elif choice == "21":
+
+        search_by_availability()
+
+
+    elif choice == "22":
+
+        sort_books()
+
+
+    elif choice == "23":
+
+        filter_books_by_year()
+
+
+    elif choice == "24":
+
+        filter_books()
+
+
+    else:
+
+        print("Invalid choice!")
+
