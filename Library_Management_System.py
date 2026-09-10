@@ -715,6 +715,35 @@ def filter_books():
         print("No books found!")
 
 
+# ==========================
+# Change Borrowed
+# ==========================
+
+def change_borrower():
+
+    title = input("Enter book title: ").strip()
+
+    found = False
+
+    for book in books:
+
+        if book["title"] == title:
+            found = True
+
+            if not book["available"]:
+
+                new_borrower = input("Enter new borrower name: ")
+
+                book["borrower"] = new_borrower
+
+                print("Borrower updated successfully!")
+
+            else:
+                print("Book is not borrowed!")
+
+    if not found:
+        print("Book not found!")            
+                
 
 # ==========================
 # Menu
@@ -748,6 +777,7 @@ while True:
     print("22. Sort Books")
     print("23. Filter Books by Year")
     print("24. Filter Books")
+    print("25. Change Borrower")
 
     choice = input("Enter your choice: ")
 
@@ -871,6 +901,9 @@ while True:
     elif choice == "24":
 
         filter_books()
+
+    elif choice == "25":
+        change_borrower()    
 
 
     else:
