@@ -780,6 +780,17 @@ def show_borrow_history():
         print("Action:", history["action"])
         print("Date:", history["date"])
         print("------------------------------")
+
+
+# ==========================
+# Clear borrow history
+# ==========================
+
+def clear_borrow_history():
+
+   borrow_history.clear()
+   print("Borrow history cleared successfully!")
+
 # ==========================
 # Menu
 # ==========================
@@ -814,6 +825,7 @@ while True:
     print("24. Filter Books")
     print("25. Change Borrower")
     print("26. Show Borrow History")
+    print("27. Clear Borrow History")
 
     choice = input("Enter your choice: ")
 
@@ -942,7 +954,10 @@ while True:
         change_borrower()  
 
     elif choice == "26":
-        show_borrow_history()      
+        show_borrow_history()  
+
+    elif choice == "27":
+        clear_borrow_history()        
 
 
     else:
