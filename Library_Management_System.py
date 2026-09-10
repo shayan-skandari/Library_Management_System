@@ -795,7 +795,51 @@ def clear_borrow_history():
         borrow_history.clear()
         print("Borrow history cleared successfully!")
     else:
-        print("Borrow history was not cleared")    
+        print("Borrow history was not cleared")
+
+
+# ==========================
+# Sort Books
+# ==========================    
+
+def sort_books():
+
+    sort_type = input("Sort by (title/author/year): ").strip().lower()
+
+    if sort_type == "title":
+        sorted_books = sorted(
+            books,
+            key=lambda book: book["title"]
+        )
+
+    elif sort_type == "author":
+        sorted_books = sorted(
+            books,
+            key=lambda book: book["author"]
+        )
+
+    elif sort_type == "year":
+        sorted_books = sorted(
+            books,
+            key=lambda book: book["year"]
+        )
+
+    else:
+        print("Invalid sort type!")
+        return
+
+    for book in sorted_books:
+        print("Title:", book["title"])
+        print("Author:", book["author"])
+        print("Year:", book["year"])
+
+        if book["available"]:
+            print("Available")
+        else:
+            print("Borrowed")
+            print("Borrower:", book["borrower"])
+
+        print("------------------------------")   
 
 # ==========================
 # Menu
@@ -832,6 +876,7 @@ while True:
     print("25. Change Borrower")
     print("26. Show Borrow History")
     print("27. Clear Borrow History")
+    print("28. Sort books")
 
     choice = input("Enter your choice: ")
 
@@ -963,7 +1008,10 @@ while True:
         show_borrow_history()  
 
     elif choice == "27":
-        clear_borrow_history()        
+        clear_borrow_history()
+
+    elif choice == "28":
+        sort_books()            
 
 
     else:
