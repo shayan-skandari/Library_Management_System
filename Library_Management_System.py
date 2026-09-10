@@ -774,8 +774,12 @@ def change_borrower():
 def show_borrow_history():
 
     for history in borrow_history:
-        print(history)
 
+        print("Book:", history["title"])
+        print("Borrower:", history["borrower"])
+        print("Action:", history["action"])
+        print("Date:", history["date"])
+        print("------------------------------")
 # ==========================
 # Menu
 # ==========================
