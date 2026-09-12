@@ -867,7 +867,37 @@ def sort_books():
             print("Borrowed")
             print("Borrower:", book["borrower"])
 
-        print("------------------------------")   
+        print("------------------------------")  
+
+# ==========================
+# Update Book
+# ========================== 
+
+def update_book():
+
+    title = input("Enter book title: ").strip()
+
+    found = False
+
+    for book in books:
+
+        if book["title"].lower() == title.lower():
+
+            found = True
+
+            new_title = input("Enter new title: ").strip()
+            new_author = input("Enter new author: ").strip()
+            new_year = int(input("Enter new publication year: "))
+
+            book["title"] = new_title
+            book["author"] = new_author
+            book["year"] = new_year
+
+            print("Book updated successfully!")
+
+    if not found:
+        print("Book not found!")
+
 
 # ==========================
 # Menu
@@ -905,6 +935,7 @@ while True:
     print("26. Show Borrow History")
     print("27. Clear Borrow History")
     print("28. Sort books")
+    print("29. Update Book")
 
     choice = input("Enter your choice: ")
 
@@ -1039,7 +1070,10 @@ while True:
         clear_borrow_history()
 
     elif choice == "28":
-        sort_books()            
+        sort_books() 
+
+    elif choice == "29":
+        update_book()               
 
 
     else:
