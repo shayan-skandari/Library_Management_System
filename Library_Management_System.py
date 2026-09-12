@@ -900,6 +900,27 @@ def update_book():
 
 
 # ==========================
+# library_statistics
+# ==========================
+
+def library_statistics():
+    total_books = len(books)
+
+    available_books = 0
+    borrowed_books = 0
+
+    for book in books:
+        if book["available"]:
+            available_books += 1
+        else:
+            borrowed_books += 1
+
+    print("===== Library Statistics =====")
+    print("Total Books:", total_books)
+    print("Available Books:", available_books)
+    print("Borrowed Books:", borrowed_books)
+
+# ==========================
 # Menu
 # ==========================
 
@@ -936,6 +957,7 @@ while True:
     print("27. Clear Borrow History")
     print("28. Sort books")
     print("29. Update Book")
+    print("30. Library Statistics")
 
     choice = input("Enter your choice: ")
 
@@ -1073,8 +1095,11 @@ while True:
         sort_books() 
 
     elif choice == "29":
-        update_book()               
+        update_book() 
 
+    elif choice == "30":
+        library_statistics()
+                         
 
     else:
 
