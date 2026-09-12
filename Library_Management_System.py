@@ -283,31 +283,59 @@ def load_books():
 # Search Book
 # ==========================
 
-def search_book():
+def search_books():
 
-    keyword = input("Enter book title: ").strip().lower()
+    search_type = input("Search by (title/author/year): ").strip().lower()
+
+    if search_type == "title":
+        search_value = input("Enter book title: ").strip()
+
+    elif search_type == "author":
+        search_value = input("Enter author name: ").strip()
+
+    elif search_type == "year":
+        search_value = int(input("Enter publication year: "))
+
+    else:
+        print("Invalid search type!")
+        return
 
     found = False
 
     for book in books:
 
-        if keyword in book["title"].lower():
+        if search_type == "title":
 
-            found = True
+            if book["title"].lower() == search_value.lower():
+                found = True
 
-            print(book["title"])
-            print(book["author"])
-            print(book["year"])
+        elif search_type == "author":
+
+            if book["author"].lower() == search_value.lower():
+                found = True
+
+        elif search_type == "year":
+
+            if book["year"] == search_value:
+                found = True
+
+        if found:
+            print("Title:", book["title"])
+            print("Author:", book["author"])
+            print("Year:", book["year"])
 
             if book["available"]:
                 print("Available")
-
             else:
                 print("Borrowed")
+                print("Borrower:", book["borrower"])
+
+            print("------------------------------")
+
+            found = False
 
     if not found:
         print("No books found!")
-
 
 
 # ==========================
@@ -858,7 +886,7 @@ while True:
     print("7. Exit")
     print("8. Save Books")
     print("9. Load Books")
-    print("10. Search Book")
+    print("10. Search Books")
     print("11. Search by Author")
     print("12. Edit Book")
     print("13. Count Books")
@@ -929,7 +957,7 @@ while True:
 
     elif choice == "10":
 
-        search_book()
+        search_books()
 
 
     elif choice == "11":
